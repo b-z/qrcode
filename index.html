@@ -9,6 +9,7 @@
 		<textarea id='txt1' rows=2 cols=80 placeholder='填写二维码生成内容' style='margin-bottom:6px;'>
 Hello, 
     world!</textarea>
+		<div></div>
 		<div id='qrcode' style='margin-left:60px;margin-top:50px;margin-bottom:60px;padding:10px;border:3px dashed #999;display:none;float:left;'>
 		</div>
 		<h5 id='thanks' style='font-family:"微软雅黑";display:none;'>
@@ -16,6 +17,7 @@ Hello,
 		</h5>
 		<div style='clear:both;'></div>
 		<textarea id='txt2' rows=1 cols=80 placeholder='填入二维码边长(像素)，默认为256' style='margin-bottom:6px;'></textarea>
+		<div></div>
 		<textarea id='txt3' rows=14 cols=80 placeholder='' style='margin-bottom:6px;'>
 //此处写入控制二维码颜色的代码。
 //可利用的参数: i、j表示行列数，n表示二维码每边的格子数，ctx:canvas的画笔，
@@ -29,6 +31,7 @@ if ((i<8&&j<8)||(i>n-8&&j<8)||(j>n-8&&i<8))
 else
 	color = 'rgb('+f(100/n*i)+','+f(100/n*j)+','+f(100/n*(j+i))+')';
 //这个仅仅是样例，所以丑了些，请尽情发挥想象力...</textarea>
+		<div></div>
 		<textarea id='txt4' rows=10 cols=80 placeholder='' style='margin-bottom:6px;'>
 //绘制二维码每个格子的语句，也可以自定义形状，画什么都行~ 上文提到的参数仍可使用
 if (1) //方形
