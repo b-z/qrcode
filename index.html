@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>~自定义二维码~</title>
+</head>
+<body>
+	<h5 style='font-family:"微软雅黑"'>自定义二维码绘制(^^)/</h5>
+	<div style='margin:auto'>
+		<textarea id='txt1' rows=2 cols=80 placeholder='填写二维码生成内容' style='margin-bottom:6px;'>
+Hello, 
+    world!</textarea>
+		<div id='qrcode' style='margin-left:60px;margin-top:50px;margin-bottom:60px;padding:10px;border:3px dashed #999;display:none;float:left;'>
+		</div>
+		<h5 id='thanks' style='font-family:"微软雅黑";display:none;'>
+		　　谢谢使用_(. .)_ <br>　　Created By Zhou Bowei<br>　　zbwwwww@gmail.com<br>　　2014.12.12 于清华老图书馆
+		</h5>
+		<div style='clear:both;'></div>
+		<textarea id='txt2' rows=1 cols=80 placeholder='填入二维码边长(像素)，默认为256' style='margin-bottom:6px;'></textarea>
+		<textarea id='txt3' rows=14 cols=80 placeholder='' style='margin-bottom:6px;'>
+//此处写入控制二维码颜色的代码。
+//可利用的参数: i、j表示行列数，n表示二维码每边的格子数，ctx:canvas的画笔，
+//    height、width: 高度宽度的像素数。利用这些参数计算并给color变量赋值。例如: 
+var gradient = ctx.createLinearGradient(0, height, width, 0); 
+gradient.addColorStop(0, "#00f"); 
+gradient.addColorStop(1, "#f00");
+var f = Math.floor;
+if ((i<8&&j<8)||(i>n-8&&j<8)||(j>n-8&&i<8)) 
+	color = gradient;
+else
+	color = 'rgb('+f(100/n*i)+','+f(100/n*j)+','+f(100/n*(j+i))+')';
+//这个仅仅是样例，所以丑了些，请尽情发挥想象力...</textarea>
+		<textarea id='txt4' rows=10 cols=80 placeholder='' style='margin-bottom:6px;'>
+//绘制二维码每个格子的语句，也可以自定义形状，画什么都行~ 上文提到的参数仍可使用
+if (1) //方形
+	ctx.fillRect(x,y,w,h);
+else { //圆点
+	ctx.beginPath(); 
+	ctx.arc(x0+w0/2, y0+w0/2, w0/2, 0, Math.PI*2, true); 
+	ctx.fill();
+}</textarea>
+		<div></div>
+		<button id='bt1'style="width:80px;height:35px;margin-bottom:6px;font-family:'微软雅黑'">画!</button>
+	</div>
+	<script type="text/javascript" src="jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="qrcode.js"></script>
+	<script type="text/javascript">
+		$('textarea').css('font-family','Consolas,"微软雅黑"');
+		var text = '';
+		var width = 256;
+		var height = 256;
+		var background = '#fff';
+		var foreground = '#000';
+		var txt3;
+		var txt4;
+		var createCanvas	= function(){
+			// create the qrcode itself
+			var qrcode	= new QRCode(-1, QRErrorCorrectLevel.H);
+			qrcode.addData(text);
+			qrcode.make();
+
+			// create canvas element
+			var canvas	= document.createElement('canvas');
+			canvas.width	= width;
+			canvas.height	= height;
+			var ctx		= canvas.getContext('2d');
+
+			// compute tileW/tileH based on options.width/options.height
+			var tileW	= width  / qrcode.getModuleCount();
+			var tileH	= height / qrcode.getModuleCount();
+
+			// draw in the canvas
+			for( var row = 0; row < qrcode.getModuleCount(); row++ ){
+				for( var col = 0; col < qrcode.getModuleCount(); col++ ){
+					var i = row, j = col;
+					var n = qrcode.getModuleCount();
+					ctx.fillStyle = qrcode.isDark(row, col) ? forecolor(i, j, n, ctx, txt3) : background;
+					var w = (Math.ceil((col+1)*tileW) - Math.floor(col*tileW));
+					var h = (Math.ceil((row+1)*tileW) - Math.floor(row*tileW));
+					var x = Math.round(col*tileW);
+					var y = Math.round(row*tileH);
+					var w0 = tileW;//(Math.ceil((col+1)*tileW) - Math.floor(col*tileW));
+					var h0 = tileH;//(Math.ceil((row+1)*tileW) - Math.floor(row*tileW));
+					var x0 = col*tileW;
+					var y0 = row*tileH;
+					eval(txt4);
+					//ctx.fillRect(Math.round(col*tileW),Math.round(row*tileH), w, h);  
+				}	
+			}
+			// return just built canvas
+			return canvas;
+		}
+		function forecolor(i, j, n, ctx, txt)
+		{
+			var color;
+			eval(txt);
+			return color;
+		}
+		$('#bt1').click(function(){
+			text = $('#txt1')[0].value;
+			width = $('#txt2')[0].value;
+			if (width == '') width = 256;
+			height = width;
+			txt3 = $('#txt3')[0].value;
+			txt4 = $('#txt4')[0].value;
+			$('#qrcode')[0].innerHTML='';
+			$('#qrcode').append(createCanvas());
+			$('#qrcode').css('display','block');
+			$('#qrcode').css('width', width+'px');
+			$('#bt1')[0].innerHTML='重画!';
+			$('#thanks').css('display','block');
+			$('#thanks').css('margin-top',width+'px');
+		})
+	</script>
+</body>
+</html>
+
