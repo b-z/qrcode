@@ -30,26 +30,7 @@ if ((i<8&&j<8)||(i>n-8&&j<8)||(j>n-8&&i<8))
 	color = gradient;
 else
 	color = 'rgb('+f(100/n*i)+','+f(100/n*j)+','+f(100/n*(j+i))+')';
-//这个仅仅是样例，所以丑了些，请尽情发挥想象力...
-/*再比如下面的是四个斜向色块的背景色
-var myGradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-var r11=30+Math.floor(Math.random()*50), r21=r11+30, r31=r21+30, r01=r11-30;
-var r12=30+Math.floor(Math.random()*50), r22=r12+30, r32=r22+30, r02=r12-30;
-var r13=30+Math.floor(Math.random()*50), r23=r13+30, r33=r23+30, r03=r13-30;
-var color1 = 'rgb('+r11+','+r12+','+r13+')';
-var color2 = 'rgb('+r21+','+r22+','+r23+')';
-var color3 = 'rgb('+r31+','+r32+','+r33+')';
-var color0 = 'rgb('+r01+','+r02+','+r03+')';
-myGradient.addColorStop(0, color3);
-myGradient.addColorStop(0.245, color3);
-myGradient.addColorStop(0.255, color2);
-myGradient.addColorStop(0.495, color2);
-myGradient.addColorStop(0.505, color1);
-myGradient.addColorStop(0.745, color1);
-myGradient.addColorStop(0.755, color0);
-myGradient.addColorStop(1, color0);
-color=myGradient;
-*/</textarea>
+//这个仅仅是样例，所以丑了些，请尽情发挥想象力...</textarea>
 		<div></div>
 		<textarea id='txt4' rows=10 cols=80 placeholder='' style='margin-bottom:6px;'>
 //绘制二维码每个格子的语句，也可以自定义形状，画什么都行~ 上文提到的参数仍可使用
